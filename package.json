@@ -1,0 +1,27 @@
+{
+  "name": "fitness-tracking-api",
+  "version": "1.0.0",
+  "description": "This is a Node.js and Express API project structured with TypeScript. The project is designed to be modular and maintainable, following best practices for organizing code.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "format": "prettier --write ./src",
+    "format:check": "prettier --check ./src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.14.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.5.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
