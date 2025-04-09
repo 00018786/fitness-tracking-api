@@ -33,7 +33,17 @@ fitness-tracking-api/
 ### Users
 
 - `POST /users` - Create a new user
+  - Request body: `{ "name": "string" }`
+  - Response: `{ "id": number, "name": "string" }`
+
+- `PUT /users/:id` - Update a user
+  - URL parameters: `id` (user ID)
+  - Request body: `{ "name": "string" }`
+  - Response: `{ "id": number, "name": "string" }`
+
 - `DELETE /users/:id` - Delete a user
+  - URL parameters: `id` (user ID)
+  - Response: 204 No Content
 
 Example user object:
 ```json
@@ -177,14 +187,3 @@ The project is configured for deployment on Render. It consists of two services:
 - `PORT`: Port number for the Express API (default: 3000)
 - `JSON_SERVER_URL`: URL of the json-server (default: http://localhost:3001)
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the ISC License.

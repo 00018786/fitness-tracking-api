@@ -7,4 +7,4 @@ usersRouter.post('/', createUser as RequestHandler);
 usersRouter.put('/:id', updateUser as RequestHandler);
 usersRouter.delete('/:id', deleteUser as RequestHandler);
 
-export default usersRouter; 
+export default usersRouter;
