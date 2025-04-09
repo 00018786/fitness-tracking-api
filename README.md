@@ -1,75 +1,190 @@
-# Express TypeScript API
+# Fitness Tracking API
 
-This is a Node.js and Express API project structured with TypeScript. The project is designed to be modular and maintainable, following best practices for organizing code.
+A RESTful API for tracking fitness milestones, built with Node.js, Express, and TypeScript. The project uses json-server as a mock database.
+
+## Features
+
+- Create, read, update, and delete fitness milestones
+- Create and delete users
+- Track user achievements
+- RESTful API endpoints
+- TypeScript support
+- Mock database with json-server
 
 ## Project Structure
 
 ```
-express-ts-api
-├── src
-│   ├── app.ts                # Initializes the Express application and sets up middleware
-│   ├── server.ts             # Entry point that starts the server
-│   ├── config                # Configuration settings
-│   │   ├── index.ts          # Exports configuration settings
-│   │   └── environment.ts     # Exports environment-specific variables
-│   ├── controllers           # Controller functions for handling requests
-│   │   └── index.ts          # Exports controller functions
-│   ├── middlewares           # Middleware functions
-│   │   ├── error.middleware.ts # Error handling middleware
-│   │   └── index.ts          # Exports all middleware functions
-│   ├── models                # Data models for database interactions
-│   │   └── index.ts          # Exports data models
-│   ├── routes                # API route definitions
-│   │   ├── api.routes.ts     # Exports API route definitions
-│   │   └── index.ts          # Exports all route definitions
-│   ├── services              # Business logic and interactions with models
-│   │   └── index.ts          # Exports service functions
-│   ├── types                 # TypeScript interfaces and types
-│   │   └── index.ts          # Exports TypeScript types
-│   └── utils                 # Utility functions
-│       └── index.ts          # Exports utility functions
-├── tests                     # Test cases for the API
-│   └── api.test.ts           # Contains test cases for API endpoints
-├── .env.example              # Example of environment variables
-├── .eslintrc.js              # ESLint configuration
-├── .gitignore                # Git ignore file
-├── jest.config.js            # Jest configuration
-├── nodemon.json              # Nodemon configuration
-├── package.json              # npm configuration file
-├── tsconfig.json             # TypeScript configuration file
-└── README.md                 # Project documentation
+fitness-tracking-api/
+├── src/
+│   ├── controllers/     # Request handlers
+│   ├── routes/          # API routes
+│   ├── models/          # Data models
+│   ├── services/        # Business logic
+│   ├── middlewares/     # Custom middlewares
+│   └── index.ts         # Application entry point
+├── db.json              # Mock database
+├── server.js            # json-server configuration
+├── package.json         # Project dependencies
+└── tsconfig.json        # TypeScript configuration
 ```
 
-## Getting Started
+## API Endpoints
 
-1. **Clone the repository:**
-   ```
-   git clone <repository-url>
-   ```
+### Users
 
-2. **Install dependencies:**
-   ```
-   npm install
-   ```
+- `POST /users` - Create a new user
+- `DELETE /users/:id` - Delete a user
 
-3. **Run the application:**
-   ```
-   npm run start
-   ```
+Example user object:
+```json
+{
+  "id": 1,
+  "name": "John Doe"
+}
+```
 
-4. **Run tests:**
-   ```
-   npm run test
-   ```
+### Milestones
+
+- `GET /milestones` - Get all milestones
+- `GET /milestones/:id` - Get a specific milestone
+- `GET /milestones/user/:userId` - Get all milestones for a specific user
+- `POST /milestones` - Create a new milestone
+- `PUT /milestones/:id` - Update a milestone
+- `DELETE /milestones/:id` - Delete a milestone
+
+Example milestone object:
+```json
+{
+  "id": 1,
+  "userId": 1,
+  "title": "First 5K Run",
+  "description": "Completed first 5K run without stopping",
+  "date": "2024-04-01",
+  "type": "running",
+  "achieved": true
+}
+```
+
+## Prerequisites
+
+- Node.js (v16 or higher)
+- npm (v7 or higher)
+
+## Local Development Setup
+
+### 1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd fitness-tracking-api
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Start the servers
+
+You have two options to run the project:
+
+#### Option 1: Run both servers together (recommended)
+
+```bash
+npm run dev:all
+```
+
+This will start:
+- Express API on http://localhost:3000
+- json-server on http://localhost:3001
+
+#### Option 2: Run servers separately
+
+Terminal 1 (Express API):
+```bash
+npm run dev
+```
+
+Terminal 2 (json-server):
+```bash
+npm run json-server
+```
+
+### 4. Test the API
+
+You can test the API using tools like Postman or curl:
+
+```bash
+# Create a new user
+curl -X POST http://localhost:3000/users \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "John Doe"
+  }'
+
+# Delete a user
+curl -X DELETE http://localhost:3000/users/1
+
+# Get all milestones
+curl http://localhost:3000/milestones
+
+# Get a specific milestone
+curl http://localhost:3000/milestones/1
+
+# Get milestones for a specific user
+curl http://localhost:3000/milestones/user/1
+
+# Create a new milestone
+curl -X POST http://localhost:3000/milestones \
+  -H "Content-Type: application/json" \
+  -d '{
+    "userId": 1,
+    "title": "First Marathon",
+    "description": "Completed first full marathon",
+    "date": "2024-04-15",
+    "type": "running",
+    "achieved": false
+  }'
+
+# Update a milestone
+curl -X PUT http://localhost:3000/milestones/1 \
+  -H "Content-Type: application/json" \
+  -d '{
+    "achieved": true
+  }'
+
+# Delete a milestone
+curl -X DELETE http://localhost:3000/milestones/1
+```
+
+## Deployment
+
+The project is configured for deployment on Render. It consists of two services:
+
+1. Main API Service
+   - Environment: Node
+   - Build Command: `npm install && npm run build`
+   - Start Command: `npm start`
+
+2. JSON Server Service
+   - Environment: Node
+   - Build Command: `npm install`
+   - Start Command: `npm run json-server`
 
 ## Environment Variables
 
-Create a `.env` file in the root directory based on the `.env.example` file to set up your environment variables.
+- `PORT`: Port number for the Express API (default: 3000)
+- `JSON_SERVER_URL`: URL of the json-server (default: http://localhost:3001)
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the ISC License.

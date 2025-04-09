@@ -98,4 +98,39 @@ export const getAllMilestones = async (req: Request, res: Response) => {
     console.error('Error fetching milestones:', error);
     res.status(500).json({ error: 'Failed to fetch milestones' });
   }
+};
+
+export const deleteMilestone = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    // Check if milestone exists
+    const existingMilestone = await axios.get(`${JSON_SERVER_URL}/milestones/${id}`);
+    if (!existingMilestone.data) {
+      return res.status(404).json({ error: 'Milestone not found' });
+    }
+
+    // Delete the milestone
+    await axios.delete(`${JSON_SERVER_URL}/milestones/${id}`);
+    res.status(204).send(); // 204 No Content for successful deletion
+  } catch (error) {
+    console.error('Error deleting milestone:', error);
+    res.status(500).json({ error: 'Failed to delete milestone' });
+  }
+};
+
+export const getMilestonesByUserId = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const response = await axios.get(`${JSON_SERVER_URL}/milestones?userId=${userId}`);
+    
+    if (!response.data || response.data.length === 0) {
+      return res.status(404).json({ error: 'No milestones found for this user' });
+    }
+
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching user milestones:', error);
+    res.status(500).json({ error: 'Failed to fetch user milestones' });
+  }
 }; 
