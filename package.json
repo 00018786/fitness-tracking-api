@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "format": "prettier --write ./src",
-    "format:check": "prettier --check ./src"
+    "format:check": "prettier --check ./src",
+    "json-server": "json-server --watch db.json --port 3001"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +23,7 @@
     "typescript": "^5.8.3"
   },
   "devDependencies": {
+    "json-server": "^1.0.0-beta.3",
     "nodemon": "^3.1.9",
     "prettier": "^3.5.3"
   }
