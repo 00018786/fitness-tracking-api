@@ -1,7 +1,12 @@
 # Fitness Tracking API
 https://github.com/00018786/fitness-tracking-api
 
+This Project structure was chosen because UI and API are separated
+
 A RESTful API for tracking fitness activities, built with Node.js, Express, and TypeScript.
+
+# Deployment Link
+https://fitness-tracking-api.onrender.com
 
 ## Features
 
