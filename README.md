@@ -1,15 +1,104 @@
 # Fitness Tracking API
+https://github.com/00018786/fitness-tracking-api
 
-A RESTful API for tracking fitness milestones, built with Node.js, Express, and TypeScript. The project uses json-server as a mock database.
+A RESTful API for tracking fitness activities, built with Node.js, Express, and TypeScript.
 
 ## Features
 
-- Create, read, update, and delete fitness milestones
-- Create and delete users
-- Track user achievements
-- RESTful API endpoints
-- TypeScript support
-- Mock database with json-server
+- User management
+- Activity tracking
+- Workout logging
+- Progress monitoring
+
+## API Endpoints
+
+### Users
+
+- `GET /users` - Get all users
+  - Response: `[{ "id": number, "name": "string" }]`
+
+- `GET /users/:id` - Get user name by ID
+  - URL parameters: `id` (user ID)
+  - Response: `{ "name": "string" }`
+
+- `POST /users` - Create a new user
+  - Request body: `{ "name": "string" }`
+  - Response: `{ "id": number, "name": "string" }`
+
+- `PUT /users/:id` - Update a user
+  - URL parameters: `id` (user ID)
+  - Request body: `{ "name": "string" }`
+  - Response: `{ "id": number, "name": "string" }`
+
+- `DELETE /users/:id` - Delete a user
+  - URL parameters: `id` (user ID)
+  - Response: 204 No Content
+
+### Activities
+
+- `POST /activities` - Create a new activity
+  - Request body: `{ "userId": number, "type": "string", "duration": number, "calories": number }`
+  - Response: `{ "id": number, "userId": number, "type": "string", "duration": number, "calories": number, "date": "string" }`
+
+- `GET /activities` - Get all activities
+  - Response: Array of activity objects
+
+- `GET /activities/:id` - Get a specific activity
+  - URL parameters: `id` (activity ID)
+  - Response: Activity object
+
+- `DELETE /activities/:id` - Delete an activity
+  - URL parameters: `id` (activity ID)
+  - Response: 204 No Content
+
+### Milestones
+
+- `POST /milestones` - Create a new milestone
+  - Request body: `{ "userId": number, "title": "string", "description": "string", "date": "string", "type": "string", "achieved": boolean }`
+  - Response: `{ "id": number, "userId": number, "title": "string", "description": "string", "date": "string", "type": "string", "achieved": boolean }`
+
+- `GET /milestones` - Get all milestones
+  - Response: Array of milestone objects
+
+- `GET /milestones/:id` - Get a specific milestone
+  - URL parameters: `id` (milestone ID)
+  - Response: Milestone object
+
+- `GET /milestones/user/:userId` - Get milestones by user
+  - URL parameters: `userId` (user ID)
+  - Response: Array of milestone objects
+
+- `PUT /milestones/:id` - Update a milestone
+  - URL parameters: `id` (milestone ID)
+  - Request body: `{ "title": "string", "description": "string", "date": "string", "type": "string", "achieved": boolean }`
+  - Response: Updated milestone object
+
+- `DELETE /milestones/:id` - Delete a milestone
+  - URL parameters: `id` (milestone ID)
+  - Response: 204 No Content
+
+## Setup
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+## Development
+
+- The API uses a mock database (json-server) for development
+- TypeScript for type safety
+- Express for routing and middleware
+- Axios for HTTP requests
+
+## License
+
+MIT
 
 ## Project Structure
 
@@ -26,53 +115,6 @@ fitness-tracking-api/
 ├── server.js            # json-server configuration
 ├── package.json         # Project dependencies
 └── tsconfig.json        # TypeScript configuration
-```
-
-## API Endpoints
-
-### Users
-
-- `POST /users` - Create a new user
-  - Request body: `{ "name": "string" }`
-  - Response: `{ "id": number, "name": "string" }`
-
-- `PUT /users/:id` - Update a user
-  - URL parameters: `id` (user ID)
-  - Request body: `{ "name": "string" }`
-  - Response: `{ "id": number, "name": "string" }`
-
-- `DELETE /users/:id` - Delete a user
-  - URL parameters: `id` (user ID)
-  - Response: 204 No Content
-
-Example user object:
-```json
-{
-  "id": 1,
-  "name": "John Doe"
-}
-```
-
-### Milestones
-
-- `GET /milestones` - Get all milestones
-- `GET /milestones/:id` - Get a specific milestone
-- `GET /milestones/user/:userId` - Get all milestones for a specific user
-- `POST /milestones` - Create a new milestone
-- `PUT /milestones/:id` - Update a milestone
-- `DELETE /milestones/:id` - Delete a milestone
-
-Example milestone object:
-```json
-{
-  "id": 1,
-  "userId": 1,
-  "title": "First 5K Run",
-  "description": "Completed first 5K run without stopping",
-  "date": "2024-04-01",
-  "type": "running",
-  "achieved": true
-}
 ```
 
 ## Prerequisites

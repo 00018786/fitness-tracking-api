@@ -3,10 +3,31 @@ import axios from 'axios';
 
 const JSON_SERVER_URL = process.env.JSON_SERVER_URL || 'http://localhost:3001';
 
-interface User {
-  id: number;
-  name: string;
-}
+export const getUsers = async (req: Request, res: Response) => {
+  try {
+    const response = await axios.get(`${JSON_SERVER_URL}/users`);
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error('Error getting users:', error);
+    res.status(500).json({ error: 'Failed to get users' });
+  }
+};
+
+export const getUserName = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const response = await axios.get(`${JSON_SERVER_URL}/users/${id}`);
+    
+    if (!response.data) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ name: response.data.name });
+  } catch (error) {
+    console.error('Error getting user name:', error);
+    res.status(500).json({ error: 'Failed to get user name' });
+  }
+};
 
 export const createUser = async (req: Request, res: Response) => {
   try {
