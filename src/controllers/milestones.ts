@@ -4,6 +4,7 @@ import axios from 'axios';
 const JSON_SERVER_URL = process.env.JSON_SERVER_URL || 'http://localhost:3001';
 
 interface Milestone {
+  id: number;
   userId: number;
   title: string;
   description: string;
@@ -20,13 +21,18 @@ export const createMilestone = async (req: Request, res: Response) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
+    const milestonesResponse = await axios.get(`${JSON_SERVER_URL}/milestones`);
+    const milestones = milestonesResponse.data || [];
+    const nextId = milestones.length > 0 ? Math.max(...milestones.map((m: any) => m.id)) + 1 : 1;
+
     const response = await axios.post(`${JSON_SERVER_URL}/milestones`, {
+      id: nextId,
       userId,
       title,
       description,
       date,
       type,
-      achieved: achieved || false,
+      achieved: achieved || false
     });
 
     res.status(201).json(response.data);
