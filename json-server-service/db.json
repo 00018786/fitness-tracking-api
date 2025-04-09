@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com",
+      "age": 30,
+      "weight": 75,
+      "height": 180
+    }
+  ],
+  "workouts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "type": "running",
+      "duration": 30,
+      "calories": 300,
+      "date": "2024-04-09"
+    }
+  ],
+  "goals": [
+    {
+      "id": 1,
+      "userId": 1,
+      "type": "weight",
+      "target": 70,
+      "deadline": "2024-12-31",
+      "progress": 75
+    }
+  ],
+  "milestones": [
+    {
+      "id": 1,
+      "userId": 1,
+      "title": "First 5K Run",
+      "description": "Completed first 5K run without stopping",
+      "date": "2024-04-01",
+      "type": "running",
+      "achieved": true
+    }
+  ]
+} 
